@@ -1,181 +1,927 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Meta tags necesarios -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portafolio de Sandro - Fotógrafo Profesional</title>
-  <!-- Link al CSS de Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Estilos personalizados -->
   <style>
-    .hero-section {
-      background: url('https://picsum.photos/1500/800') no-repeat center center/cover;
-      height: 60vh;
+    /* Variables CSS para colores y tamaños */
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --text-color: #333;
+      --text-light: #fff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* Reset y estilos base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #f9f9f9;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background-color: var(--secondary-color);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--secondary-color);
+      color: var(--text-light);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Header y navegación */
+    header {
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-light);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 2rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 0.5rem 0;
+      transition: var(--transition);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--secondary-color);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: var(--secondary-color);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-light);
+      margin: 5px;
+      transition: var(--transition);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                  url('https://picsum.photos/1500/800') no-repeat center center/cover;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      text-align: center;
+      color: var(--text-light);
+      margin-top: 0;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
-    .gallery img {
-      transition: transform 0.3s ease;
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
+
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
-    .gallery img:hover {
+
+    /* Galería */
+    .gallery {
+      padding: 5rem 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      height: 300px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      color: white;
+      padding: 1rem;
+      transform: translateY(100%);
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0);
+    }
+
+    /* Sobre Mí */
+    .about {
+      background-color: var(--light-color);
+      padding: 5rem 0;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-img {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .about-img img {
+      width: 100%;
+      height: auto;
+      transition: var(--transition);
+    }
+
+    .about-img:hover img {
       transform: scale(1.05);
     }
-    .blog-post {
+
+    .about-text h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .about-text p {
+      margin-bottom: 1.5rem;
+    }
+
+    .skills {
+      margin-top: 2rem;
+    }
+
+    .skill-item {
+      margin-bottom: 1rem;
+    }
+
+    .skill-name {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-bar {
+      height: 8px;
+      background-color: #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background-color: var(--secondary-color);
+      border-radius: 4px;
+    }
+
+    /* Blog */
+    .blog {
+      padding: 5rem 0;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .blog-card {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
       display: flex;
       flex-direction: column;
-      height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+      height: 100%;
     }
-    .blog-post .btn {
-      margin-top: auto; /* Empuja el botón hacia la parte inferior */
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-img {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .blog-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .blog-card:hover .blog-img img {
+      transform: scale(1.1);
+    }
+
+    .blog-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-content h3 {
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .blog-content p {
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    /* Contacto */
+    .contact {
+      padding: 5rem 0;
+      background-color: var(--light-color);
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark-color);
+      color: var(--text-light);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .social-links {
+      display: flex;
+      margin: 1.5rem 0;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      margin: 0 0.5rem;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background-color: var(--secondary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 999;
+    }
+
+    .back-to-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-5px);
+    }
+
+    /* Efectos de scroll */
+    section {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      
+      .hero p {
+        font-size: 1.3rem;
+      }
+      
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-img {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        right: 0;
+        top: 70px;
+        background-color: var(--primary-color);
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        clip-path: circle(0px at 90% -10%);
+        transition: all 0.5s ease-out;
+      }
+      
+      .nav-links.active {
+        clip-path: circle(1000px at 90% -10%);
+      }
+      
+      .nav-links li {
+        margin: 1rem 0;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .hamburger.active div:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+      
+      .hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .hamburger.active div:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Header y Navegación -->
+  <header>
     <div class="container">
-      <a class="navbar-brand" href="#">Portafolio de Sandro</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#inicio">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#galeria">Galería</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#sobre-mi">Sobre Mí</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#blog">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contacto">Contacto</a>
-          </li>
+      <nav class="navbar">
+        <a href="#" class="logo">Portafolio de Sandro</a>
+        
+        <ul class="nav-links">
+          <li><a href="#inicio" class="active">Inicio</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#sobre-mi">Sobre Mí</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contacto">Contacto</a></li>
         </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <header id="inicio" class="hero-section">
-    <div class="text-center">
-      <h1 class="display-4">Capturando Momentos Inolvidables</h1>
-      <p class="lead">Fotografía profesional para eventos, retratos y paisajes.</p>
+        
+        <div class="hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </nav>
     </div>
   </header>
 
+  <!-- Hero Section -->
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <h1>Capturando Momentos Inolvidables</h1>
+      <p>Fotografía profesional para eventos, retratos y paisajes.</p>
+      <a href="#contacto" class="btn">Contáctame</a>
+    </div>
+  </section>
+
   <!-- Galería de Fotos -->
-  <section id="galeria" class="container my-5">
-    <h2 class="text-center mb-4">Galería</h2>
-    <div class="row gallery">
-      <div class="col-12 col-md-4 mb-4">
-        <img src="./img/atardecer.jpg" class="img-fluid" alt="Foto 1">
-      </div>
-      <div class="col-12 col-md-4 mb-4">
-        <img src="./img/boda.jpg" class="img-fluid" alt="Foto 2">
-      </div>
-      <div class="col-12 col-md-4 mb-4">
-        <img src="./img/barcos.jpg" class="img-fluid" alt="Foto 3">
-      </div>
-      <div class="col-12 col-md-4 mb-4">
-        <img src="./img/videoclip.jpg" class="img-fluid" alt="Foto 4">
-      </div>
-      <div class="col-12 col-md-4 mb-4">
-        <img src="./img/dron.jpg" class="img-fluid" alt="Foto 5">
-      </div>
-      <div class="col-12 col-md-4 mb-4">
-        <img src="./img/london.jpg" class="img-fluid" alt="Foto 6">
+  <section id="galeria" class="gallery">
+    <div class="container">
+      <h2 class="section-title">Galería</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="./img/atardecer.jpg" alt="Atardecer">
+          <div class="gallery-caption">Atardecer en la playa</div>
+        </div>
+        <div class="gallery-item">
+          <img src="./img/boda.jpg" alt="Boda">
+          <div class="gallery-caption">Fotografía de bodas</div>
+        </div>
+        <div class="gallery-item">
+          <img src="./img/barcos.jpg" alt="Barcos">
+          <div class="gallery-caption">Paisaje marítimo</div>
+        </div>
+        <div class="gallery-item">
+          <img src="./img/videoclip.jpg" alt="Videoclip">
+          <div class="gallery-caption">Fotografía musical</div>
+        </div>
+        <div class="gallery-item">
+          <img src="./img/dron.jpg" alt="Dron">
+          <div class="gallery-caption">Fotografía aérea</div>
+        </div>
+        <div class="gallery-item">
+          <img src="./img/london.jpg" alt="Londres">
+          <div class="gallery-caption">Viajes urbanos</div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Sobre Mí -->
-  <section id="sobre-mi" class="bg-light py-5">
+  <section id="sobre-mi" class="about">
     <div class="container">
-      <h2 class="text-center mb-4">Sobre Mí</h2>
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <img src="https://picsum.photos/400/400?random=7" class="img-fluid rounded-circle" alt="Sandro - Fotógrafo">
+      <h2 class="section-title">Sobre Mí</h2>
+      <div class="about-content">
+        <div class="about-img">
+          <img src="https://picsum.photos/600/600?random=7" alt="Sandro - Fotógrafo">
         </div>
-        <div class="col-12 col-md-6">
-          <p>¡Hola! Soy <strong>Sandro</strong>, un fotógrafo profesional con más de <strong>4 años de experiencia</strong>. Me especializo en capturar momentos únicos en eventos, retratos y paisajes. Mi objetivo es contar historias a través de mis fotos y crear recuerdos que duren para siempre.</p>
+        <div class="about-text">
+          <h3>¡Hola! Soy Sandro</h3>
+          <p>Un fotógrafo profesional con más de <strong>4 años de experiencia</strong>. Me especializo en capturar momentos únicos en eventos, retratos y paisajes. Mi objetivo es contar historias a través de mis fotos y crear recuerdos que duren para siempre.</p>
+          <p>Mi enfoque combina técnica profesional con una perspectiva artística única, asegurando que cada imagen cuente una historia y evoque emociones genuinas.</p>
+          
+          <div class="skills">
+            <h4>Mis habilidades:</h4>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>Fotografía de retratos</span>
+                <span>95%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>Fotografía de paisajes</span>
+                <span>90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">
+                <span>Edición fotográfica</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 85%"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Blog -->
-  <section id="blog" class="container my-5">
-    <h2 class="text-center mb-4">Blog</h2>
-    <div class="row">
-      <div class="col-12 col-md-4 mb-4 d-flex">
-        <div class="blog-post">
-          <h3>Consejos para Fotografía de Retratos</h3>
-          <p>Descubre cómo capturar retratos impresionantes con estos consejos prácticos.</p>
-          <a href="#" class="btn btn-primary">Leer más</a>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 mb-4 d-flex">
-        <div class="blog-post">
-          <h3>Fotografía de Paisajes: Técnicas Avanzadas</h3>
-          <p>Aprende a dominar la fotografía de paisajes con estas técnicas avanzadas.</p>
-          <a href="#" class="btn btn-primary">Leer más</a>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 mb-4 d-flex">
-        <div class="blog-post">
-          <h3>Equipo Esencial para Fotógrafos</h3>
-          <p>Conoce el equipo esencial que todo fotógrafo debe tener.</p>
-          <a href="#" class="btn btn-primary">Leer más</a>
-        </div>
+  <section id="blog" class="blog">
+    <div class="container">
+      <h2 class="section-title">Blog</h2>
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div class="blog-img">
+            <img src="https://picsum.photos/600/400?random=1" alt="Consejos para Fotografía de Retratos">
+          </div>
+          <div class="blog-content">
+            <h3>Consejos para Fotografía de Retratos</h3>
+            <p>Descubre cómo capturar retratos impresionantes con estos consejos prácticos que te ayudarán a resaltar la personalidad de tus sujetos.</p>
+            <a href="#" class="btn">Leer más</a>
+          </div>
+        </article>
+        
+        <article class="blog-card">
+          <div class="blog-img">
+            <img src="https://picsum.photos/600/400?random=2" alt="Fotografía de Paisajes: Técnicas Avanzadas">
+          </div>
+          <div class="blog-content">
+            <h3>Fotografía de Paisajes: Técnicas Avanzadas</h3>
+            <p>Aprende a dominar la fotografía de paisajes con estas técnicas avanzadas que transformarán tus imágenes en obras de arte.</p>
+            <a href="#" class="btn">Leer más</a>
+          </div>
+        </article>
+        
+        <article class="blog-card">
+          <div class="blog-img">
+            <img src="https://picsum.photos/600/400?random=3" alt="Equipo Esencial para Fotógrafos">
+          </div>
+          <div class="blog-content">
+            <h3>Equipo Esencial para Fotógrafos</h3>
+            <p>Conoce el equipo esencial que todo fotógrafo debe tener, desde cámaras hasta accesorios que marcan la diferencia.</p>
+            <a href="#" class="btn">Leer más</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
   <!-- Contacto -->
-  <section id="contacto" class="container my-5">
-    <h2 class="text-center mb-4">Contacto</h2>
-    <form>
-      <div class="mb-3">
-        <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="nombre" required>
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Correo Electrónico</label>
-        <input type="email" class="form-control" id="email" required>
-      </div>
-      <div class="mb-3">
-        <label for="mensaje" class="form-label">Mensaje</label>
-        <textarea class="form-control" id="mensaje" rows="5" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+  <section id="contacto" class="contact">
+    <div class="container">
+      <h2 class="section-title">Contacto</h2>
+      <form class="contact-form" id="contactForm">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo Electrónico</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" class="form-control" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn submit-btn">Enviar Mensaje</button>
+      </form>
+    </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-3">
+  <footer>
     <div class="container">
-      <p>&copy; 2023 Portafolio de Sandro. Todos los derechos reservados.</p>
-      <p>Sígueme en: 
-        <a href="#" class="text-white">Instagram</a> | 
-        <a href="#" class="text-white">Facebook</a> | 
-        <a href="#" class="text-white">Twitter</a>
-      </p>
+      <div class="footer-content">
+        <h3>Portafolio de Sandro</h3>
+        <p>Fotografía profesional para capturar tus momentos especiales.</p>
+        
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+        
+        <p class="copyright">&copy; 2023 Portafolio de Sandro. Todos los derechos reservados.</p>
+      </div>
     </div>
   </footer>
 
-  <!-- Script de Bootstrap (JavaScript) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Botón para volver arriba -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menú hamburguesa para móviles
+      const hamburger = document.querySelector('.hamburger');
+      const navLinks = document.querySelector('.nav-links');
+      
+      hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+      
+      // Cerrar menú al hacer clic en un enlace (para móviles)
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+        });
+      });
+      
+      // Cambiar clase activa en navegación al hacer scroll
+      const sections = document.querySelectorAll('section');
+      const navItems = document.querySelectorAll('.nav-links li a');
+      
+      window.addEventListener('scroll', function() {
+        let current = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          
+          if (pageYOffset >= (sectionTop - 300)) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navItems.forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('href') === `#${current}`) {
+            item.classList.add('active');
+          }
+        });
+      });
+      
+      // Mostrar/ocultar botón de volver arriba
+      const backToTopBtn = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          backToTopBtn.classList.add('active');
+        } else {
+          backToTopBtn.classList.remove('active');
+        }
+      });
+      
+      // Animación de scroll suave para todos los enlaces
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 70,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // Animación de aparición al hacer scroll
+      const observerOptions = {
+        threshold: 0.1
+      };
+      
+      const observer = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+      
+      // Manejo del formulario de contacto
+      const contactForm = document.getElementById('contactForm');
+      
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Aquí iría la lógica para enviar el formulario
+          alert('¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.');
+          this.reset();
+        });
+      }
+      
+      // Simular iconos de Font Awesome (ya que no estamos usando CDN)
+      function simulateIcons() {
+        const icons = document.querySelectorAll('.fa-instagram, .fa-facebook-f, .fa-twitter, .fa-pinterest-p, .fa-arrow-up');
+        
+        icons.forEach(icon => {
+          const parent = icon.parentElement;
+          parent.innerHTML = '';
+          parent.style.display = 'flex';
+          parent.style.alignItems = 'center';
+          parent.style.justifyContent = 'center';
+          
+          if (icon.classList.contains('fa-instagram')) {
+            parent.textContent = 'IG';
+          } else if (icon.classList.contains('fa-facebook-f')) {
+            parent.textContent = 'FB';
+          } else if (icon.classList.contains('fa-twitter')) {
+            parent.textContent = 'TW';
+          } else if (icon.classList.contains('fa-pinterest-p')) {
+            parent.textContent = 'PIN';
+          } else if (icon.classList.contains('fa-arrow-up')) {
+            parent.textContent = '↑';
+          }
+        });
+      }
+      
+      simulateIcons();
+    });
+  </script>
 </body>
 </html>
